@@ -1,0 +1,46 @@
+<%- include('partials/header.ejs') %>
+
+<div class ='container'>
+    
+    <h1>Yard Sales:</h1>
+    <a href='/yard-sales/new'>Create new yard sale</a>
+    <div class='row'>
+        
+        <% yardSales.forEach(function(post) { %>
+            <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 p-3'>
+                <div class="card">
+                    <% if (post.image == '') { %>
+                        <% var images = []; %>
+                        <% post.items.forEach(function(item) { %>
+                            <% if (item.image != '') { %>
+                                <% images.push(item.image[0]); %>
+                            <% } %>
+                        <% }); %>
+                        <% images = images.slice(0,6); %>
+                        <div class='row px-3'>
+                        <% for(var i=0; i<images.length; i++) { %>
+                            <div class='col-4 px-0'>
+                                <img src= '<%= images[i] %>' class="card-img-top collage px-0" alt="...">
+                            </div>
+                        <% } %>
+                        </div>
+                    <% } else { %>
+                        <img src= '<%= post.image %>' class="card-img-top center-cropped" alt="...">
+                    <% } %>
+                    
+                    <div class="card-body">
+                        <h5 class="card-title"><%= post.title %></h5>
+                        <p class="card-text"><%= post.description %></p>
+                        <p class="card-text text-secondary"><%= post.location %></p>
+                        <img src='<%= post.poster.avatar %>' class="rounded-circle" width='50' > <%= post.poster.name %><br>
+                        <a href="/yard-sales/<%= post._id %>" class="btn btn-primary mt-4">View <%= post.items.length %> items</a>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+        
+    </div>
+</div>
+
+
+<%- include('partials/footer.ejs') %>

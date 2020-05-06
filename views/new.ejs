@@ -1,0 +1,92 @@
+<%- include('partials/header.ejs') %>
+
+<script>
+    var i = 2;
+    function addItem() {
+        console.log('function start');
+        document.getElementById('moreItems').insertAdjacentHTML('beforeend', "<hr class='my-4'><div class='form-group'> <input class='form-control' type='text' name='itemTitle"+i+"' placeholder='Title' required></div><div class='form-group row justify-content-between' id='sideBySideInputs'><input class='form-control col-sm-5' type='text' name='imageUrl"+i+"' placeholder='Image url'><p class='my-2'> or </p><div class='custom-file col-sm-5 mb-3'><input name='itemImageFile' type='file' class='custom-file-input' id='customFile"+i+"' onchange='printFileName(this)' accept='.jpg,.png'><label class='custom-file-label' for='customFile"+i+"' id='customFileLabel"+i+"'>Image file</label><div class='invalid-feedback' id='invalidFeedback"+i+"'></div></div></div><div class='form-group'><textarea class='form-control' name='itemDescription"+i+"' placeholder='Description'></textarea></div><div class='form-group'><input class='form-control' type='number' name='itemPrice"+i+"' placeholder='Price' min='0.00' max='10000.00' step='0.25'></div>");
+        i++;
+    }
+    function printFileName(element) {
+        const value = element.value.replace('C:\\fakepath\\', '');
+        const lastElement = value.length;
+        const extIndex = value.indexOf('.', -1);
+        const ext = value.slice(extIndex, lastElement);
+        const formats = ['.bmp', '.jpg', '.jpeg', '.jfif', '.pjpeg', '.pjp', '.png', '.svg', '.webp'];
+        if (formats.includes(ext)) {
+            element.class = 'custom-file-input'
+            const suffix = element.id.replace('customFile', '');
+            document.getElementById('customFileLabel'+suffix).innerHTML = value;
+        } else {
+            document.getElementById('customFileLabel'+suffix).innerHTML = '';
+            element.className = 'custom-file-input is-invalid';
+            console.log(element.class);
+            const suffix = element.id.replace('customFile', '');
+            document.getElementById('invalidFeedback'+suffix).innerHTML = 'Image must be bmp, jpeg, png, svg, or webp';
+        }
+        
+    }
+</script>
+
+<div class='container'>
+    <div class='row justify-content-center'>
+        
+        <form class='col-md-10 col-xl-8 ' method='POST' action='/yard-sales' enctype="multipart/form-data">
+            <h1>Create a new yard sale</h1>
+            <div class='form-group'>
+                <input class='form-control' type='text' name='title' placeholder='Title' required>
+            </div>
+            <div class='form-group'>
+                <textarea class='form-control' name='description' placeholder='Description' rows='4'></textarea>
+            </div>
+            <div class='form-group row justify-content-between' id='sideBySideInputs'>
+                <input class='form-control col-sm-5' type='text' name='imageUrl' placeholder='Image url'>
+                <p class='my-2'> or </p>
+                <div class='custom-file col-sm-5 mb-3'>
+                    <input name='itemImageFile' type='file' class='custom-file-input' id='customFile' onchange='printFileName(this)' accept='.bmp,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp'>
+                    <label class='custom-file-label' for='customFile' id='customFileLabel'>Image file</label>
+                    <div class='invalid-feedback' id='invalidFeedback0'>
+                    </div>
+                </div>
+            </div> 
+            <div class='form-group'>
+                <input class='form-control' type='text' name='location' placeholder='Neighbourhood' required>
+            </div>
+            <h5 class='mt-4'>Items for sale:</h5>
+            <hr class='my-4'>
+            
+            <div class='form-group'>
+                <input class='form-control' type='text' name='itemTitle0' placeholder='Title' required>
+            </div>
+            <div class='form-group row justify-content-between' id='sideBySideInputs'>
+                <input class='form-control col-sm-5' type='text' name='imageUrl0' placeholder='Image url'>
+                <p class='my-2'> or </p>
+                <div class='custom-file col-sm-5 mb-3'>
+                    <input name='itemImageFile' type='file' class='custom-file-input' id='customFile0' onchange='printFileName(this)' accept='.bmp,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp'>
+                    <label class='custom-file-label' for='customFile0' id='customFileLabel0'>Image file</label>
+                    <div class='invalid-feedback' id='invalidFeedback0'>
+                    </div>
+                </div>
+            </div> 
+            <div class='form-group'>
+                <textarea class='form-control' name='itemDescription0' placeholder='Description'></textarea>
+            </div> 
+            <div class='form-group'>
+                <input class='form-control' type='number' name='itemPrice0' placeholder='Price' min="0.00" max="10000.00" step="0.25" >
+            </div> 
+            <div id='moreItems'>
+            </div>
+            <div class='form-group'>
+                <button type='button' class='btn btn-light btn-lg' onclick='addItem()'>Add item</button>
+            </div>
+            <div class='form-group'>
+                <input class='btn btn-primary btn-lg' type='submit'>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<%- include('partials/footer.ejs') %>

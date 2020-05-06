@@ -1,0 +1,36 @@
+<%- include('partials/header.ejs') %>
+
+<div class ='container col-12 md-10 col-xl-8'>
+    <div class='row'>
+        <div class=' p-3'>
+            <img src=<%= yardSale.image %> alt="" width='100%'>
+            <h5><%= yardSale.title %></h5>
+            <p><%= yardSale.description %></p>
+            <p class="text-secondary"><%= yardSale.location %></p>
+            <img src='<%= yardSale.poster.avatar %>' class="rounded-circle" width='50' > <%= yardSale.poster.name %><br>
+            <a href="/yard-sales/<%= yardSale._id %>" class="btn btn-primary mt-4">Message Seller</a>
+        </div>
+    </div>
+
+    <h1>Items for sale:</h1>
+    <div class='row'>
+        
+        <% yardSale["items"].forEach(function(item) { %>
+            <div class='col-sm-12 col-md-6 col-lg-4 col-xl-3 p-3'>
+                <div class="card">
+                    <% if (item.image.length > 0) { %>
+                        <img src= '<%= item.image[0] %>' class="card-img-top center-cropped" alt="...">
+                    <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title"><%= item.title %></h5>
+                        <p class="card-text text-secondary">$<%= item.price %></p>
+                        <p class="card-text"><%= item.description %></p>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+        
+    </div>
+</div>
+
+<%- include('partials/footer.ejs') %>
